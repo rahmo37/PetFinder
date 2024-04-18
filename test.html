@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #c8b0b0;
+        color: #333;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        position: relative;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: -15px 10px 50px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        max-width: 50%;
+        margin: auto;
+      }
+
+      .img-name-container {
+        position: relative;
+        width: 100%; /* Full width of the container */
+        height: 450px; /* Fixed height for the image container */
+        overflow: hidden; /* Ensures no spillover outside the container */
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #petImage {
+        width: 100%; /* Full width of the container */
+        height: 400px; /* Match the height of the container */
+        object-fit: cover; /* Cover the container area without stretching */
+        transition: transform 0.3s ease; /* Smooth transformation on hover */
+        margin-bottom: 10px;
+      }
+
+      #petImage:hover {
+        transform: scale(1.1); /* Zoom in effect */
+        cursor: pointer;
+      }
+
+      .name-container {
+        position: absolute; /* Absolutely position the name container */
+        bottom: 0; /* Align to the bottom of the parent */
+        left: 50%; /* Center horizontally */
+        transform: translateX(
+          -50%
+        ); /* Offset the left position to truly center */
+        padding-left: 50px;
+        padding-right: 50px;
+        width: auto; /* Allow the width to fit content */
+        max-width: calc(
+          100% - 40px
+        ); /* Ensure it doesn’t overflow the image container */
+        background-color: rgba(
+          255,
+          255,
+          255,
+          0.979
+        ); /* Slightly transparent background */
+        border-radius: 15px;
+        box-shadow: -5px 2px 12px rgba(0, 0, 0, 0.2);
+        margin-bottom: 15px; /* Space from the bottom */
+        text-align: center;
+        font-size: 20px;
+        font-weight: bolder;
+        color: #000;
+      }
+
+      .info-container {
+        display: flex;
+        flex-wrap: wrap; /* Allows items to wrap if necessary */
+        justify-content: space-around; /* Evenly distributes spacing between items */
+        padding: 20px;
+        gap: 20px; /* Defines space between items */
+      }
+
+      .info {
+        flex: 0 0 48%; /* Flex grow is 0, flex shrink is 0, flex-basis is 48% */
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centers content vertically */
+        align-items: center; /* Centers content horizontally */
+        padding: 10px;
+        background-color: #ffffff; /* Light grey background */
+        border-radius: 5px; /* Rounded corners */
+        /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); Adds depth with a subtle shadow */
+      }
+
+      .info label {
+        font-weight: bold;
+        color: #a9a9a9;
+        margin-bottom: 5px; /* Space between label and content */
+      }
+
+      .info p {
+        margin: 0;
+        font-size: 20px;
+      }
+
+      #status {
+        position: absolute;
+        color: #ff0101;
+        right: 25px;
+        top: -10px;
+        font-size: 25px;
+        font-weight: bolder;
+      }
+
+      .reportStatusBtn { 
+        position: absolute;
+        padding: 20px;
+        background-color: #ffffff;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        top: 320px;
+        right: -170px;
+        opacity: 0;
+
+        transition: opacity 0.5s ease, right 0.5s ease-in-out;
+        border-radius: 10px;
+      }
+
+      .img-name-container:hover .reportStatusBtn {
+        opacity: 1;
+        right: 0px;
+      }
+
+      .reportStatusBtn button {
+        cursor: pointer;
+      }
+
+
+      @keyframes beatingGlowGreen {
+        0%,
+        100% {
+          box-shadow: 0px 0 0px #71fc00;
+        }
+
+        50% {
+          box-shadow: 0 0 20px #47fc00;
+        }
+      }
+
+      @keyframes beatingGlowRed {
+        0%,
+        100% {
+          box-shadow: 0px 0 0px #fc7a00;
+        }
+
+        50% {
+          box-shadow: 0 0 20px #fc6d00;
+        }
+      }
+
+      .reportStatusBtn #accept {
+        border: 2px solid #37ea18;
+        border-radius: 30px;
+        background-color: #ffffff;
+        font-size: larger;
+        color: #37ea18;
+      }
+
+      .reportStatusBtn #accept:hover {
+        animation: beatingGlowGreen 1s infinite ease-in-out;
+      }
+
+      .reportStatusBtn #reject {
+        border: 2px solid #ff2800;
+        border-radius: 30px;
+        font-size: larger;
+        background-color: #ffffff;
+        color: #ff2800;
+      }
+
+      .reportStatusBtn #reject:hover {
+        animation: beatingGlowRed 1s infinite ease-in-out;
+      }
+
+      #message {
+        position: absolute;
+        top: 200px;
+        color:#37ea18;
+        font-size: 25px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="img-name-container">
+        <img src="./Images/Siamese.jpg" alt="" id="petImage" />
+        <p id="message" style="display: block">Accepted</p>
+        <div class="name-container">
+          <p id="petName">Max</p>
+        </div>
+        <div class="reportStatusBtn">
+          <button id="accept" onclick="alert(`Hi`)">&#x2714</button>
+          <button id="reject">&#x2715</button>
+        </div>
+      </div>
+      <div class="info-container">
+        <div class="info">
+          <label>Owner Name</label>
+          <p>Alex Johnson</p>
+        </div>
+        <div class="info">
+          <label>Breed</label>
+          <p>Labrador</p>
+        </div>
+        <div class="info">
+          <label>Last Seen Location</label>
+          <p>123 Park Lane</p>
+        </div>
+        <div class="info">
+          <label>Last Seen Date</label>
+          <p>2024-03-25</p>
+        </div>
+      </div>
+      <div id="status">
+        <p>Lost</p>
+      </div>
+    </div>
+  </body>
+</html>
