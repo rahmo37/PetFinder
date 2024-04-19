@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    html,
+    body {
+      height: 100%; /* Ensure the full height is taken up */
+      margin: 0; /* Reset default margin */
+    }
+
+    body {
+      font-family: "Arial", sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+      padding: 0; /* No padding to interfere with centering */
+      display: flex;
+      justify-content: center; /* Center horizontally */
+      align-items: center; /* Center vertically */
+      background-image: linear-gradient(
+        to right,
+        rgb(182, 244, 146),
+        rgb(51, 139, 147)
+      );
+      transition: all 0.3s ease;
+    }
+
+    .reportBtns {
+      background-color: transparent;
+      color: white;
+      padding: 20px 20px;
+      margin: 10px;
+      border: 2px solid white;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    @keyframes beatingGlow {
+      0%,
+      100% {
+        box-shadow: 0 0 0px #c1fc00;
+      }
+      50% {
+        box-shadow: 0 0 20px #c1fc00;
+      }
+    }
+
+    .reportBtns:hover {
+      background-color: rgb(255, 255, 255);
+      color: #767676;
+      animation: beatingGlow 2s infinite ease-in-out;
+    }
+
+    .reportBtns:active {
+      transform: scale(0.95);
+    }
+
+    .reportContainer {
+      min-width: 60%;
+      padding: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+    #backBtn {
+      position: fixed;
+      right: 125px;
+      top: 10px;
+      background-color: transparent;
+      color: white;
+      padding: 20px 20px;
+      margin: 10px;
+      border: 2px solid white;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.3s ease-in-out;
+    }
+
+    #backBtn:hover {
+      background-color: rgb(255, 255, 255);
+      color: #767676;
+      animation: beatingGlow 2s infinite ease-in-out;
+    }
+  </style>
+  <body>
+    <div class="reportContainer">
+      <form action="deleteReports.php" method="get">
+        <button type="submit" name="action" value="lost" class="reportBtns">
+          Delete Lost Reports
+        </button>
+        <button type="submit" name="action" value="found" class="reportBtns">
+          Delete Found Reports
+        </button>
+      </form>
+    </div>
+    <button id="backBtn" onclick=window.location.href='../welcomePage.html'>
+      Back
+    </button>
+  </body>
+</html>

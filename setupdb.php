@@ -10,6 +10,7 @@ if ($conn->connect_error) {
   $query .= "DROP TABLE IF EXISTS Owners;";
   $query .= "DROP TABLE IF EXISTS FinderReports;";
   $query .= "DROP TABLE IF EXISTS Finder;";
+  $query .= "DROP TABLE IF EXISTS Users;";
   $result = $conn->multi_query($query);
   if (!$result) {
     die("Unable to drop Tables");
@@ -48,12 +49,11 @@ function createOwnersTable($conn)
   // Based on the result echoing appropriate message
   if ($result) {
     echo "Owners table created or already exsists!" . "<br>";
+    // Invoking the insertRecordInOwners() to insert the records
+    insertRecordInOwners($conn);
   } else {
     echo "There was a problem creating the Owners table!";
   }
-
-  // Invoking the insertRecordInOwners() to insert the records
-  insertRecordInOwners($conn);
 }
 
 function insertRecordInOwners($conn)
@@ -124,11 +124,10 @@ function createLostReportTable($conn)
   // Based on the result of the query
   if ($result) {
     echo "LostReport table created or already exsists!" . "<br>";
+    insertRecordInLostReportTable($conn);
   } else {
     echo "There was a problem creating the LostReport table!" . $conn->error;
   }
-
-  insertRecordInLostReportTable($conn);
 }
 
 function insertRecordInLostReportTable($conn)
@@ -250,11 +249,10 @@ function createFinderTable($conn)
   // Based on the success result of the query echoing appropriate message
   if ($result) {
     echo "Finder table created or already exists!" . "<br>";
+    insertRecordInFinders($conn);
   } else {
     echo "There was a problem creating the Finder table!" . $conn->error;
   }
-
-  insertRecordInFinders($conn);
 }
 
 function insertRecordInFinders($conn)
@@ -332,12 +330,11 @@ function createFinderReportsTable($conn)
   // Based on the success result of the query echoing appropriate message
   if ($result) {
     echo "FinderReports table created or already exists!" . "<br>";
+    // Invoking the insertRecordInFinderReports() function to insert the values
+    insertRecordInFinderReports($conn);
   } else {
     echo "There was a problem creating the FinderReports table!" . $conn->error;
   }
-
-  // Invoking the insertRecordInFinderReports() function to insert the values
-  insertRecordInFinderReports($conn);
 }
 
 
@@ -346,6 +343,16 @@ function insertRecordInFinderReports($conn)
 {
   // The Array that contains all finder report information
   $finderReports = [
+    [
+      'FinderID' => 1,
+      'FoundLocation' => '333 Apple la',
+      'FoundDate' => '2024-04-09',
+      'PhotoURL' => 'Macaw.jpg',
+      'Species' => 'Bird',
+      'Breed' => 'Macaw',
+      'Color' => 'Blue',
+      'ReportStatus' => 'Pending'
+    ],
     [
       'FinderID' => 1,
       'FoundLocation' => 'Central Park',
@@ -400,6 +407,84 @@ function insertRecordInFinderReports($conn)
 }
 
 
+function createUsersTable($conn)
+{
+  // query to create the users table
+  $query = "CREATE TABLE IF NOT EXISTS Users (
+      UserName VARCHAR(100) NOT NULL,
+      ContactNumber VARCHAR(15) NOT NULL,
+      Password VARCHAR(255) NOT NULL,
+      Email VARCHAR(100) NOT NULL,
+      IsAdmin TINYINT(1),
+      PRIMARY KEY (UserName),
+      UNIQUE(ContactNumber),
+      UNIQUE(Email),
+      UNIQUE(UserName, ContactNumber, Email)
+    )";
+
+  // Executing and saving the result true or false
+  $result = $conn->query($query);
+
+  // Based on the result echoing appropriate message
+  if ($result) {
+    echo "Users table created or already exsists!" . "<br>";
+    // Invoking the insertRecordInOwners() to insert the records
+    insertRecordInUsers($conn);
+  } else {
+    echo "There was a problem creating the Users table!";
+  }
+}
+
+function insertRecordInUsers($conn)
+{
+  // The Array that contains all the Owners information
+  $users = [
+    [
+      'UserName' => 'Alex123',
+      'ContactNumber' => '123-555-0100',
+      'Password' => 'Alex123',
+      'Email' => 'alexj@example.com',
+      'IsAdmin' => 0
+    ],
+    [
+      'UserName' => 'Obaedur123',
+      'ContactNumber' => '123-555-0101',
+      'Password' => 'Obaedur123',
+      'Email' => 'brendal@example.net',
+      'IsAdmin' => 1
+    ],
+    [
+      'UserName' => 'John123',
+      'ContactNumber' => '123-456-7890',
+      'Password' => 'John123',
+      'Email' => 'johnJ@example.com',
+      'IsAdmin' => 0
+    ]
+  ];
+  // Preparing the query
+  $query = 'INSERT INTO Users(UserName,ContactNumber,Password,Email,IsAdmin) VALUES(?,?,?,?,?)';
+
+  // Preparing the statement with the query;
+  $stmt = $conn->prepare($query);
+
+
+
+  // For each record in the array passing the corresponding name contactnumber and the email using for each loop
+  foreach ($users as $each) {
+    $hashedPassword = password_hash($each['Password'], PASSWORD_DEFAULT);
+    $stmt->bind_param("ssssi", $each['UserName'], $each['ContactNumber'], $hashedPassword, $each['Email'], $each['IsAdmin']);
+
+    // After each successful binding of each record, executing the statement
+    $result = $stmt->execute();
+    if (!$result) {
+      echo "Error inserting data for Name: " .  $each['UserName'] . "<br>" . $stmt->error;
+    }
+  }
+  echo "Users Table Populated Succesfully!";
+  $stmt->close();
+}
+
+
 //! ------------------------------
 
 // Calling the functions to create the table and insert data
@@ -407,3 +492,4 @@ createOwnersTable($conn);
 createLostReportTable($conn);
 createFinderTable($conn);
 createFinderReportsTable($conn);
+createUsersTable($conn);

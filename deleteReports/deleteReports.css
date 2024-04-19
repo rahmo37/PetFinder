@@ -112,7 +112,7 @@ body {
 #title {
   margin-left: 20px;
   position: fixed;
-  font-size: 25px;
+  font-size: 30px;
   color: #ffffff;
 }
 
@@ -157,7 +157,7 @@ hr {
   background-color: #a9a9a9;
 }
 
-.reportStatusBtn {
+.deleteStatusBtn {
   position: absolute;
   padding: 20px;
   background-color: #ffffff;
@@ -174,59 +174,25 @@ hr {
   border-radius: 10px;
 }
 
-.img-name-container:hover .reportStatusBtn {
+.img-name-container:hover .deleteStatusBtn {
   opacity: 1;
   right: 0px;
 }
 
-.reportStatusBtn button {
+.deleteStatusBtn button {
   cursor: pointer;
 }
 
-@keyframes beatingGlowGreen {
-  0%,
-  100% {
-    box-shadow: 0px 0 0px #71fc00;
-  }
-
-  50% {
-    box-shadow: 0 0 20px #47fc00;
-  }
-}
-
-@keyframes beatingGlowRed {
-  0%,
-  100% {
-    box-shadow: 0px 0 0px #fc7a00;
-  }
-
-  50% {
-    box-shadow: 0 0 20px #fc6d00;
-  }
-}
-
-.reportStatusBtn #accept {
-  border: 2px solid #37ea18;
-  border-radius: 30px;
-  background-color: #ffffff;
-  font-size: larger;
-  color: #37ea18;
-}
-
-.reportStatusBtn #accept:hover {
-  animation: beatingGlowGreen 1s infinite ease-in-out;
-}
-
-.reportStatusBtn #reject {
-  border: 2px solid #ff2800;
-  border-radius: 30px;
+.deleteStatusBtn #delete {
+  border: none;
   font-size: larger;
   background-color: #ffffff;
   color: #ff2800;
+  transition: all 0.3s ease-in-out;
 }
 
-.reportStatusBtn #reject:hover {
-  animation: beatingGlowRed 1s infinite ease-in-out;
+.deleteStatusBtn #delete:hover {
+  text-shadow: 0 0 20px #fc6d00;
 }
 
 .message {

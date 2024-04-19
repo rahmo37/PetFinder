@@ -8,22 +8,10 @@ if ($conn->connect_error) {
   die("Fatal Error");
 }
 
-
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if (isset($_POST['reportId']) && $_POST['status'] === 'Accepted' && $_POST['reportType'] === 'lost') {
-    $reportId = $conn->real_escape_string($_POST['reportId']);
-    $newStatus = "Accepted";
-    $stmt = $conn->prepare("UPDATE lostreport SET ReportStatus = ? WHERE ReportId = ?");
-    $stmt->bind_param("si", $newStatus, $reportId);
-    if ($stmt->execute()) {
-      echo "Successful";
-    } else {
-      echo "Failed" . $stmt->error;
-    }
-  } else if (isset($_POST['reportId']) && $_POST['status'] === 'Rejected' && $_POST['reportType'] === 'lost') {
+  if (isset($_POST['reportId']) && $_POST['reportType'] === 'lost') {
 
-    // Here i am going use a transaction, because my goal is not to delete the report if rejected but also the assocciated owner as well, but only if the owner does not have any other reports. This is a sophisticated opetation, and if i encounter exception in any point of my opration i would like to rollbcak.
+    // Here i am going use a transaction, because my goal is not to delete the report but also the assocciated owner as well, but only if the owner does not have any other reports. This is a sophisticated opetation, and if i encounter exception in any point of my opration i would like to rollbcak.
 
     // Begin transaction
     $conn->begin_transaction();
@@ -69,21 +57,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $conn->rollback();
       echo "Failed";
     }
-  }
-  if (isset($_POST['reportId']) && $_POST['status'] === 'Accepted' && $_POST['reportType'] === 'found') {
-    $reportId = $conn->real_escape_string($_POST['reportId']);
-    $newStatus = "Accepted";
-    $stmt = $conn->prepare("UPDATE finderreports SET ReportStatus = ? WHERE ReportId = ?");
-    $stmt->bind_param("si", $newStatus, $reportId);
-    if ($stmt->execute()) {
-      echo "Successful";
-    } else {
-      echo "Failed" . $stmt->error;
-    }
-  } else if (isset($_POST['reportId']) && $_POST['status'] === 'Rejected' && $_POST['reportType'] === 'found') {
+  } else if (isset($_POST['reportId']) && $_POST['reportType'] === 'found') {
 
-
-    // Here i am going use a transaction, because my goal is not to delete the report if rejected but also the assocciated finder as well, but only if the finder does not have any other reports. This is a sophisticated opetation, and if i encounter exception in any point of my opration i would like to rollbcak.
+    // Here i am going use a transaction, because my goal is not only to delete the report but also the assocciated finder as well, but only if the finder does not have any other reports. This is a sophisticated opetation, and if i encounter exception in any point of my opration i would like to rollbcak.
 
     // Begin transaction
     $conn->begin_transaction();
