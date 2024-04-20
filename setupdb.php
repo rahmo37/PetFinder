@@ -6,14 +6,16 @@ if ($conn->connect_error) {
   die("Fatal Error");
 } else {
   // At first droping all the if they exists so new one can be added
-  $query = "DROP TABLE IF EXISTS LostReport;";
+  $query = "DROP TABLE IF EXISTS UsersReportsLink;";
+  $query .= "DROP TABLE IF EXISTS Users;";
+  $query .= "DROP TABLE IF EXISTS LostReport;";
   $query .= "DROP TABLE IF EXISTS Owners;";
   $query .= "DROP TABLE IF EXISTS FinderReports;";
   $query .= "DROP TABLE IF EXISTS Finder;";
-  $query .= "DROP TABLE IF EXISTS Users;";
+
   $result = $conn->multi_query($query);
   if (!$result) {
-    die("Unable to drop Tables");
+    die("Unable to drop Tables..." . $conn->error);
   } else {
     // This loop condition checks if there are more results to process ($conn->more_results()) and then attempts to move to the next result set with $conn->next_result(), If there's a result set, this line frees up the memory associated with that result set
     do {
@@ -406,20 +408,19 @@ function insertRecordInFinderReports($conn)
   $stmt->close();
 }
 
+//! ----------------
 
 function createUsersTable($conn)
 {
   // query to create the users table
   $query = "CREATE TABLE IF NOT EXISTS Users (
       UserName VARCHAR(100) NOT NULL,
-      ContactNumber VARCHAR(15) NOT NULL,
       Password VARCHAR(255) NOT NULL,
       Email VARCHAR(100) NOT NULL,
       IsAdmin TINYINT(1),
       PRIMARY KEY (UserName),
-      UNIQUE(ContactNumber),
       UNIQUE(Email),
-      UNIQUE(UserName, ContactNumber, Email)
+      UNIQUE(UserName, Email)
     )";
 
   // Executing and saving the result true or false
@@ -441,28 +442,25 @@ function insertRecordInUsers($conn)
   $users = [
     [
       'UserName' => 'Alex123',
-      'ContactNumber' => '123-555-0100',
       'Password' => 'Alex123',
       'Email' => 'alexj@example.com',
       'IsAdmin' => 0
     ],
     [
       'UserName' => 'Obaedur123',
-      'ContactNumber' => '123-555-0101',
       'Password' => 'Obaedur123',
       'Email' => 'brendal@example.net',
       'IsAdmin' => 1
     ],
     [
       'UserName' => 'John123',
-      'ContactNumber' => '123-456-7890',
       'Password' => 'John123',
       'Email' => 'johnJ@example.com',
       'IsAdmin' => 0
     ]
   ];
   // Preparing the query
-  $query = 'INSERT INTO Users(UserName,ContactNumber,Password,Email,IsAdmin) VALUES(?,?,?,?,?)';
+  $query = 'INSERT INTO Users(UserName,Password,Email,IsAdmin) VALUES(?,?,?,?)';
 
   // Preparing the statement with the query;
   $stmt = $conn->prepare($query);
@@ -472,7 +470,7 @@ function insertRecordInUsers($conn)
   // For each record in the array passing the corresponding name contactnumber and the email using for each loop
   foreach ($users as $each) {
     $hashedPassword = password_hash($each['Password'], PASSWORD_DEFAULT);
-    $stmt->bind_param("ssssi", $each['UserName'], $each['ContactNumber'], $hashedPassword, $each['Email'], $each['IsAdmin']);
+    $stmt->bind_param("sssi", $each['UserName'], $hashedPassword, $each['Email'], $each['IsAdmin']);
 
     // After each successful binding of each record, executing the statement
     $result = $stmt->execute();
@@ -481,6 +479,82 @@ function insertRecordInUsers($conn)
     }
   }
   echo "Users Table Populated Succesfully!";
+  $stmt->close();
+}
+
+//! ----------------
+
+function createUsersReportsLinkTable($conn)
+{
+  // query to create the UsersReportsLink table
+  $query = "CREATE TABLE IF NOT EXISTS UsersReportsLink (
+    LinkID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    UserName VARCHAR(100) NOT NULL,
+    LostReportID INT,
+    FinderReportID INT,
+    FOREIGN KEY (LostReportID) REFERENCES LostReport(ReportID),
+    FOREIGN KEY (FinderReportID) REFERENCES FinderReports(ReportID),
+    UNIQUE(LostReportID),
+    UNIQUE(FinderReportID)
+);";
+
+  // Executing and saving the result true or false
+  $result = $conn->query($query);
+
+  // Based on the result echoing appropriate message
+  if ($result) {
+    echo "UsersReportsLink table created or already exsists!" . "<br>";
+    // Invoking the insertRecordInUsersReportsLink() to insert the records
+    insertRecordInUsersReportsLink($conn);
+  } else {
+    echo "There was a problem creating the UsersReportsLink table! " . $conn->error;
+  }
+}
+
+function insertRecordInUsersReportsLink($conn)
+{
+  // The Array that contains all the usersReportLink information
+  $usersReportLink = [
+    [
+      'UserName' => 'Alex123',
+      'LostReportID' => 1,
+      'FinderReportID' => NULL,
+    ],
+    [
+      'UserName' => 'Alex123',
+      'LostReportID' => 2,
+      'FinderReportID' => NULL,
+    ],
+    [
+      'UserName' => 'John123',
+      'LostReportID' => NULL,
+      'FinderReportID' => 1,
+    ],
+    [
+      'UserName' => 'John123',
+      'LostReportID' => NULL,
+      'FinderReportID' => 2,
+    ]
+  ];
+  // Preparing the query
+  $query = 'INSERT INTO UsersReportsLink(UserName,LostReportID,FinderReportID) VALUES(?,?,?)';
+
+  // Preparing the statement with the query;
+  $stmt = $conn->prepare($query);
+
+
+
+  // For each record in the array passing the corresponding information in each loop
+  foreach ($usersReportLink as $each) {
+    $stmt->bind_param("sii", $each['UserName'], $each['LostReportID'], $each['FinderReportID']);
+
+    // After each successful binding of each record, executing the statement
+    $result = $stmt->execute();
+    if (!$result) {
+      echo "Error inserting data for Name: " .  $each['UserName'] . "<br>" . $stmt->error;
+    }
+  }
+  echo "UsersReportLink Table Populated Succesfully!";
   $stmt->close();
 }
 
@@ -493,3 +567,4 @@ createLostReportTable($conn);
 createFinderTable($conn);
 createFinderReportsTable($conn);
 createUsersTable($conn);
+createUsersReportsLinkTable($conn);

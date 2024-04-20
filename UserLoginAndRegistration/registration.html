@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <form class="form" action="processUsers.php" method="post" id="registrationForm">
+        <p class="title1">Welcome to PetFinder</p>
+        <p class="title2">Registration Page</p>
+        <div class="box-input">
+          <i class="ri-user-3-line icon"></i>
+          <input
+            type="text"
+            id="username"
+            class="input"
+            autocomplete="off"
+            placeholder=""
+            value="Alex123"
+            required
+          />
+          <label for="username" class="label" autocomplete="off">Username</label>
+        </div>
+        <div class="box-input">
+          <i class="ri-mail-line icon"></i>
+          <input type="email" id="email" class="input" placeholder="" autocomplete="off" required value="idi@gmail.com"/>
+          <label for="label" class="label">Email</label>
+        </div>
+        <div class="box-input">
+          <i class="ri-lock-2-line icon"></i>
+          <input type="password" id="pass" class="input" placeholder="" autocomplete="off" value="pokemonpokemon"/>
+          <label for="label" class="label">Password</label>
+          <i class="ri-eye-off-line eye" id="eye"></i>
+        </div>
+        <div class="box-input"">
+          <i class="ri-lock-2-line icon"></i>
+          <input type="password" id="confPass" class="input" placeholder="" autocomplete="off" value="pokemonpokemon"/>
+          <label for="label" class="label">Confirm Password</label>
+          <i class="ri-eye-off-line eye" id="eye2"></i>
+        </div>
+        <button type="submit" class="button">Register</button>
+      </form>
+      <button type="submit" class="button" id="backBtn" onclick=window.location.href='./login.html'>Back</button>
+    </div>
+    <script>
+
+      function validateForm() {
+        const form = document.getElementById("registrationForm");
+
+
+        form.addEventListener("submit", function(e) {
+          e.preventDefault();
+          const username = document.getElementById("username").value;
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("pass").value;
+          const confPass = document.getElementById("confPass").value;
+          const errorMessage = [];
+          if(password !== confPass) {
+            errorMessage.push("The passwords you entered do not match! Please try again.");
+          }
+          if(password.length < 8) {
+            errorMessage.push("The passwords must be atleast 8 characters long");
+          }
+          if(errorMessage.length > 0) {
+            alert(errorMessage.join("\n"));
+          }
+          doExistUserNameEmail(username, email);
+        });
+      }
+      validateForm();
+
+      function doExistUserNameEmail(username, email) {
+        fetch('processUsers.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: `username=${username}&email=${email}`
+        })
+        .then(response => response.text())
+        .then(data => {
+          alert(data);
+        })
+        .catch(error => {
+          alert('Error', error);
+        });
+      }
+
+
+      window.onload = () => {
+        setupPasswordToggle("pass", "eye");
+        setupPasswordToggle("confPass", "eye2");
+      };
+
+      function setupPasswordToggle (loginPass, loginEye){
+        const input = document.getElementById(loginPass);
+        const iconEye = document.getElementById(loginEye);
+
+        iconEye.addEventListener("click", () => {
+          if (input.type === "password") {
+            input.type = "text";
+            iconEye.classList.add("ri-eye-line");
+            iconEye.classList.remove("ri-eye-off-line");
+          } else {
+            input.type = "password";
+            iconEye.classList.remove("ri-eye-line");
+            iconEye.classList.add("ri-eye-off-line");
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

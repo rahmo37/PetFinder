@@ -25,7 +25,7 @@
     background-image: linear-gradient(to right,
         rgb(151, 203, 121),
         rgb(51, 139, 147));
-    height: 60vh;
+    height: 50vh;
     padding: 20px;
     margin-top: 100px;
     border-radius: 8px;
@@ -33,10 +33,14 @@
     /* Adjust width based on padding or parent width */
     max-width: 400px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   label {
-    font-size: 16px;
+    font-size: 20px;
     /* Larger font size for better readability */
     color: #333;
     /* Dark gray color for text for better visibility */

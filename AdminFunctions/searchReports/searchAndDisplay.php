@@ -11,7 +11,7 @@
 <body>
 
   <?php
-  require_once '../login.php';
+  require_once '../../login.php';
   // Establishing connection with database
   $conn = new mysqli($hn, $un, $pw, $db);
   // If Connection fails program ends
@@ -101,7 +101,7 @@
           $htmlContent = <<<HTML
             <div class="container">
               <div class="img-name-container">
-                <img src="../Images/$PhotoURL" alt="" id="petImage" />
+                <img src="../../Images/$PhotoURL" alt="" id="petImage" />
                 <div class="name-container">
                   <p id="petName">$petName</p>
                 </div>
@@ -236,7 +236,7 @@
           $htmlContent = <<<HTML
             <div class="container">
                 <div class="img-name-container">
-                  <img src="../Images/$PhotoURL" alt="" id="petImage" />
+                  <img src="../../Images/$PhotoURL" alt="" id="petImage" />
                 </div>
                 <div class="pet-info-container">
                   <div class="info">

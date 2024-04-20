@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./approveReports.css">
+  <link rel="stylesheet" href="./deleteReports.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
   <title>Document</title>
 </head>
 
 <body>
   <?php
-  require_once '../login.php';
+  require_once '../../login.php';
   // Establishing connection with database
   $conn = new mysqli($hn, $un, $pw, $db);
   // If Connection fails program ends
@@ -38,7 +39,7 @@
   function lostreport($conn)
   {
 
-    echo '<p id="title">Pending Lost Reports</p>';
+    echo '<p id="title">Lost Reports</p>';
     // Building the query for viewing lost reports
     $query = "SELECT 
     l.ReportID as reportID,
@@ -59,7 +60,7 @@
     owners o 
   ON 
     l.OwnerID = o.OwnerID 
-  WHERE l.Reportstatus = 'Pending';";
+  WHERE l.Reportstatus = 'Accepted';";
 
 
     $result = $conn->query($query);
@@ -83,14 +84,13 @@
       $htmlContent = <<<HTML
       <div class="container" data-report-id="{$reportID}">
         <div class="img-name-container">
-          <img src="../Images/{$PhotoURL}" alt="" id="petImage" />
+          <img src="../../Images/{$PhotoURL}" alt="" id="petImage" />
           <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
           <div class="name-container">
             <p id="petName">{$petName}</p>
           </div>
-          <div class="reportStatusBtn">
-          <button id="accept" onclick="updateReportStatus(this,'{$reportID}', 'Accepted', 'lost', '{$messageID}');">&#x2714;</button>
-          <button id="reject" onclick="updateReportStatus(this,'{$reportID}', 'Rejected', 'lost','{$messageID}');">&#x2715;</button>
+          <div class="deleteStatusBtn">
+          <button id="delete" onclick="updateReportStatus(this,'{$reportID}', 'lost','{$messageID}');"><i class="ri-delete-bin-2-line" style="font-size:24px;color:red"></i></button>
           </div>
         </div>
         <div class="pet-info-container">
@@ -145,7 +145,7 @@ HTML;
   function foundreport($conn)
   {
 
-    echo '<p id="title">Pending Found Reports</p>';
+    echo '<p id="title">Found Reports</p>';
     // Building the query for viewing lost reports
     $query = "SELECT 
     fr.ReportID as reportID,
@@ -165,7 +165,7 @@ HTML;
     finder f 
   ON 
     fr.FinderId = f.FinderId 
-  WHERE fr.ReportStatus = 'Pending';";
+  WHERE fr.ReportStatus = 'Accepted';";
 
 
     $result = $conn->query($query);
@@ -188,11 +188,10 @@ HTML;
       $htmlContent = <<<HTML
         <div class="container" data-report-id="{$reportID}" data-message-id="{$messageID}">
           <div class="img-name-container">
-            <img src="../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
             <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
-            <div class="reportStatusBtn">
-            <button id="accept" onclick="updateReportStatus(this,'{$reportID}', 'Accepted', 'found', '{$messageID}');">&#x2714;</button>
-          <button id="reject" onclick="updateReportStatus(this,'{$reportID}', 'Rejected', 'found','{$messageID}');">&#x2715;</button>
+            <div class="deleteStatusBtn">
+            <button id="delete" onclick="updateReportStatus(this,'{$reportID}', 'found','{$messageID}');"><i class="ri-delete-bin-2-line" style="font-size:24px;color:red"></i></button>
         </div>
           </div>
           
@@ -247,24 +246,24 @@ HTML;
   <button id="backBtn" onclick=window.location.href='./selectReport.html'>Back</button>
 </body>
 <script>
-  function updateReportStatus(buttonElement, reportId, status, reportType, messageId) {
+  function updateReportStatus(buttonElement, reportId, reportType, messageId) {
     console.log(messageId);
-    if (confirm(status.substring(0, status.length - 2) + " this request?")) {
+    if (confirm("Delete this report?")) {
       fetch('processReport.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: `reportId=${reportId}&status=${status}&reportType=${reportType}`
+          body: `reportId=${reportId}&reportType=${reportType}`
         })
         .then(response => response.text())
         .then(data => {
           // if deletion is successful
           if (data === "Successful") {
             let message = document.getElementById("message-" + messageId);
-            let color = status === "Accepted" ? "#37ea18" : "#ff2800";
+            let color = "#ff2800";
             message.style.color = color;
-            message.innerHTML = status;
+            message.innerHTML = "Deleted";
             message.style.opacity = "1";
 
 
