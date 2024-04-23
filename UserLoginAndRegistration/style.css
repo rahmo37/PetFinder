@@ -155,3 +155,11 @@ body {
   color: #e2e1dc83;
   transition: all 0.2s ease-in;
 }
+
+.radioBtns {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  color: #e2e1dc;
+  gap: 1rem;
+}

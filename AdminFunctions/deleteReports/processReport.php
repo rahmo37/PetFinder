@@ -28,7 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->close();
 
       if ($ownerFetched) {
-        // After reciving the ownerID now we can delete the report
+        // After reciving the ownerID first we delete from the usersreportslink, becasue there is a constraint in this table, until we do no delete this report, we can not delete the report in the lostreport table.
+        $stmt = $conn->prepare("DELETE FROM usersreportslink WHERE LostReportID = ?");
+        $stmt->bind_param("i", $reportId);
+        $stmt->execute();
+        $stmt->close();
+
+
+        // Now finally we safeley delete the report from the lostreport table
         $stmt = $conn->prepare("DELETE FROM lostreport WHERE reportId = ?");
         $stmt->bind_param("i", $reportId);
         $stmt->execute();
@@ -76,7 +83,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->close();
 
       if ($finderFetched) {
-        // After reciving the finderID now we can delete the report
+        // After reciving the ownerID first we delete from the usersreportslink, becasue there is a constraint in this table, until we do no delete this report link from the usersreportslink, we can not delete the report in the finderreports table.
+        $stmt = $conn->prepare("DELETE FROM usersreportslink WHERE FinderReportID = ?");
+        $stmt->bind_param("i", $reportId);
+        $stmt->execute();
+        $stmt->close();
+
+
+
+        // now we can safely delete the record from the finderreports table
         $stmt = $conn->prepare("DELETE FROM finderreports WHERE reportId = ?");
         $stmt->bind_param("i", $reportId);
         $stmt->execute();

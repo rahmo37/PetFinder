@@ -12,7 +12,7 @@
   </head>
   <body>
     <div class="container">
-      <form class="form">
+      <form class="form" id="loginForm">
         <p class="title1">Welcome to PetFinder</p>
         <p class="title2">Login Page</p>
         <div class="box-input">
@@ -38,38 +38,34 @@
           <label for="label" class="label">Password</label>
           <i class="ri-eye-off-line eye" id="eye"></i>
         </div>
+        <div class="radioBtns">
+          <div>
+            <input
+              type="radio"
+              id="lostReportRadio"
+              name="reportType"
+              value="lost"
+              checked
+            />
+            <label for="lostReport">File Lost Report</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="foundReportRadio"
+              name="reportType"
+              value="found"
+            />
+            <label for="lostReport">File Found Report</label>
+          </div>
+        </div>
         <button type="submit" class="button">Login</button>
         <p class="register">
           Don't have an account? <a href="./registration.html">Register</a>
         </p>
       </form>
     </div>
-    <script>
-      const showHiddenPass = (loginPass, loginEye) => {
-        const input = document.getElementById(loginPass),
-          iconEye = document.getElementById(loginEye);
-
-        iconEye.addEventListener("click", () => {
-          // Change password to text
-          if (input.type === "password") {
-            // Switch to text
-            input.type = "text";
-
-            // Icon change
-            iconEye.classList.add("ri-eye-line");
-            iconEye.classList.remove("ri-eye-off-line");
-          } else {
-            // Change to password
-            input.type = "password";
-
-            // Icon change
-            iconEye.classList.remove("ri-eye-line");
-            iconEye.classList.add("ri-eye-off-line");
-          }
-        });
-      };
-
-      showHiddenPass("pass", "eye");
+    <script src="./login.js">
     </script>
   </body>
 </html>
