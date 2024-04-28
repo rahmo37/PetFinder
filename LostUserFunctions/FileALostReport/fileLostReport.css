@@ -1,0 +1,205 @@
+body {
+  font-family: "Arial", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #e2e1dc;
+  background-image: url("../../Images/BirdLost3.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  transition: all 0.3s ease-in-out;
+}
+
+.container {
+  width: 100%;
+  height: 100vh; /* Ensures the container takes full viewport height */
+  display: flex;
+  justify-content: center; /* Horizontally centers the .form within the .container */
+}
+
+.form {
+  width: 35%;
+  min-height: 80vh;
+  margin-top: 45px;
+  display: flex;
+  background-color: hsla(0, 0%, 10%, 0.1);
+  padding: 2.5rem 1.5rem;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: solid 1px #e2e1dc;
+  gap: 30px;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.form::-webkit-scrollbar {
+  width: 8px;
+}
+
+.form::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.form::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.title1 {
+  text-align: center;
+  color: #e2e1dc;
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: -15px;
+}
+
+.title2 {
+  color: #e2e1dc;
+  font-size: 20px;
+}
+
+.input {
+  position: relative;
+  width: 80%;
+  padding-block: 0.8rem;
+  padding-left: 15px;
+  color: #ffffff;
+  font-size: larger;
+  border: none;
+  outline: none;
+  z-index: 1;
+  background: none;
+}
+
+.box-input {
+  position: relative;
+  width: 80%;
+  border-bottom: solid 2px #fff;
+}
+
+.icon {
+  color: #e2e1dc;
+}
+
+.eye {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  z-index: 10;
+  cursor: pointer;
+  color: #e2e1dc;
+}
+
+.container:nth-child(2) input {
+  padding-right: 1.8rem;
+}
+
+.button {
+  width: 40%;
+  background-color: transparent;
+  color: white;
+  padding: 20px 20px;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+@keyframes beatingGlow {
+  0%,
+  100% {
+    box-shadow: 0px 0 0px #c1fc00;
+  }
+
+  50% {
+    box-shadow: 0 0 20px #c1fc00;
+  }
+}
+
+.button:hover {
+  background-color: rgb(255, 255, 255);
+  color: #767676;
+  animation: beatingGlow 2s infinite ease-in-out;
+}
+
+.button:active {
+  transform: scale(92%);
+}
+
+#backBtn {
+  width: 7%;
+  position: fixed;
+  right: 125px;
+  top: 10px;
+}
+
+.input-group {
+  width: 50%; /* Matches the width of other input styles */
+  padding: 10px;
+  margin-bottom: 20px; /* Spacing below each input group */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+
+.input-group .input {
+  width: 100%; /* Ensures the input stretches to fill the container */
+  padding: 8px 10px;
+  background: #00000065;
+  color: #bbbab6;
+  border-radius: 5px;
+  border: none; /* Typical styling for inputs */
+}
+
+.file-label {
+  color: #e2e1dc;
+}
+
+.register {
+  text-align: center;
+  color: #e2e1dc;
+}
+
+.register a {
+  color: #e2e1dc;
+  font-weight: bold;
+}
+
+.register a:hover {
+  text-decoration: underline;
+}
+
+.input:focus + .label,
+.input:not(:placeholder-shown) + .label {
+  top: -12px;
+  font-size: 12px;
+  color: #ffffff;
+}
+
+.label {
+  position: absolute;
+  left: 35px;
+  top: 13px;
+  color: #e2e1dc83;
+  transition: all 0.2s ease-in;
+}
+
+.radioBtns {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  color: #e2e1dc;
+  gap: 1rem;
+}

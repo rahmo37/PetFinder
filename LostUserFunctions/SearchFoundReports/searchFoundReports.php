@@ -114,66 +114,20 @@
 
   session_start();
   if (isset($_SESSION['username'])) {
-    if (isset($_GET['action'])) {
-      switch ($_GET['action']) {
-        case 'lost':
-          loadLostReportHtml();
-          break;
-        case 'found':
-          loadFoundReportHtml();
-          break;
-        default:
-          echo "No function specified";
-          break;
-      }
-    }
+    loadFoundReportHtml();
   } else {
     echo '
-        <style>
-        #backBtn {
-          display: none;
-        }
-        </style>
-        <div">
-        <h1 id="welcomeTitle">Page Not Found.</h1>
-        <h2 style="color: white; text-shadow: 2px 2px 4px #000000;">Please click the below link to go to the login page</h2>
-        <a href="../../UserLoginAndRegistration/login.html" class="menu-button">Login Page</a>
-        </div>';
-    die();
+  <style>
+  #backBtn {
+    display: none;
   }
-
-
-
-
-
-  function loadLostReportHtml()
-  {
-    $savedField = isset($_GET['savedField']) ? trim(htmlspecialchars($_GET['savedField'])) : '';
-    $validFields = ['petName', 'ownerName', 'species', 'breed', 'color', 'lastSeenLocation', 'lastSeenDate', 'reportStatus', 'reportDate'];
-
-    // Build options for the dropdown
-    $options = '';
-    foreach ($validFields as $field) {
-      $selected = $savedField === $field ? 'selected' : '';
-      $options .= "<option value=\"$field\" $selected>" . ucfirst($field) . "</option>";
-    }
-
-    // Output the form
-    echo "<form action='searchAndDisplay.php' method='POST'>
-            <label for='field-select'>Choose a field from Lost Report table:</label>
-            <select id='field-select' name='fieldName'>
-                $options
-            </select>
-
-            <label for='field-value'>Enter information:</label>
-            <input type='text' id='field-value' name='info'/>
-
-            <input type='hidden' name='lost' value='lost'>
-
-            <button type='submit'>Search</button>
-          </form>";
+  </style>
+  <div">
+  <h1 id="welcomeTitle">Page Not Found.</h1>
+  <h2 style="color: white; text-shadow: 2px 2px 4px #000000;">Please click the below link to go to the login page</h2>
+  <a href="../../UserLoginAndRegistration/login.html" class="menu-button">Login Page</a>
+  </div>';
   }
-
 
 
   function loadFoundReportHtml()
@@ -181,7 +135,7 @@
     $savedField = isset($_GET['savedField']) ? trim(htmlspecialchars($_GET['savedField'])) : '';
 
     // Define valid fields
-    $validFields = ['finderName', 'breed', 'species', 'color', 'foundLocation', 'foundDate', 'reportStatus', 'reportDate'];
+    $validFields = ['species', 'breed',  'color', 'foundLocation', 'foundDate', 'reportDate'];
 
     // Build options for the dropdown
     $options = '';
@@ -207,7 +161,7 @@
   }
   ?>
 
-  <button id="backBtn" onclick=window.location.href='./selectReport.html'>Back</button>
+  <button id="backBtn" onclick=window.location.href='../../welcomePage.php'>Back</button>
 
   <body>
 

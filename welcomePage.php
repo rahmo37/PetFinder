@@ -27,6 +27,7 @@
       background: rgba(255, 255, 255, 0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
+      border: solid 1px #fff;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
       display: flex;
       justify-content: space-around;
@@ -159,24 +160,28 @@
     <div class="container">
       <div class="messageContainer">
       <h3 id="welcomeTitle">Welcome to PetFinder</h3>
-      <p id="username">' . $username . '</p>
+      <p id="username">' . $username . ' (Lost Report Profile)</p>
       </div>
       <div class="menu-container">
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/viewReports/selectReport.html\'">
-          View Reportss
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/FileALostreport/fileLostReport.html\'">
+        File A Lost Report
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/searchReports/selectReport.html\'">
-          Search Reports
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/ViewReports/userLostReports.php\'">
+          View Your Reports
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/approveReports/selectReport.html\'">
-          Approve Reports
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/DeleteYourReports/deleteUserLostReports.php\'">
+          Delete Your Reports
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/deleteReports/selectReport.html\'">
-          Delete Reports
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/ViewCurrentFoundReports/viewCurrentFoundReports.php\'">
+        View Found Reports
         </button>
+
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/SearchFoundReports/searchFoundReports.php\'">
+        Search Found Reports
+      </button>
       </div>
       <a class="menu-button logOut" href="./UserLoginAndRegistration/logout.php?logout=1" style="text-decoration: none;">
       Logout
@@ -188,24 +193,28 @@
     <div class="container">
       <div class="messageContainer">
       <h3 id="welcomeTitle">Welcome to PetFinder</h3>
-      <p id="username">' . $username . '</p>
+      <p id="username">' . $username . ' (Found Report Profile)</p>
       </div>
       <div class="menu-container">
         <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/viewReports/selectReport.html\'">
-          View Reportss
+        File A Found Report
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/searchReports/selectReport.html\'">
-          Search Reports
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/viewReports/userFoundReports.php\'">
+          View You Reports
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/approveReports/selectReport.html\'">
-          Approve Reports
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/DeleteYourReports/deleteUserFoundReports.php\'">
+          Delete Your Reports
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/deleteReports/selectReport.html\'">
-          Delete Reports
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/ViewCurrentLostReports/viewCurrentLostReports.php\'">
+        View Lost Reports
         </button>
+
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/SearchLostReports/searchLostReports.php\'">
+        Search Lost Reports
+      </button>
       </div>
       <a class="menu-button logOut" href="./UserLoginAndRegistration/logout.php?logout=1" style="text-decoration: none;">
       Logout

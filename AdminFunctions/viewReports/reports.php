@@ -19,18 +19,34 @@
   }
 
 
-  if (isset($_GET['action'])) {
-    switch ($_GET['action']) {
-      case 'lost':
-        lostreport($conn);
-        break;
-      case 'found':
-        foundreport($conn);
-        break;
-      default:
-        echo "No function specified";
-        break;
+  session_start();
+  if (isset($_SESSION['username'])) {
+    if (isset($_GET['action'])) {
+      switch ($_GET['action']) {
+        case 'lost':
+          lostreport($conn);
+          break;
+        case 'found':
+          foundreport($conn);
+          break;
+        default:
+          echo "No function specified";
+          break;
+      }
     }
+  } else {
+    echo '
+        <style>
+        #backBtn {
+          display: none;
+        }
+        </style>
+        <div">
+        <h1 id="welcomeTitle">Page Not Found.</h1>
+        <h2 style="color: white; text-shadow: 2px 2px 4px #000000;">Please click the below link to go to the login page</h2>
+        <a href="../../UserLoginAndRegistration/login.html" class="menu-button">Login Page</a>
+        </div>';
+    die();
   }
 
   function lostreport($conn)

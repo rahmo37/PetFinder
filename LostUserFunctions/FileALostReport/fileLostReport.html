@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="./fileLostReport.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <form
+        class="form"
+        action="processUsers.php"
+        method="post"
+        id="lostReportForm"
+        enctype="multipart/form-data"
+      >
+        <p class="title1">File A Lost report</p>
+        <h2 class="title2">Pet Information</h2>
+
+        <div class="box-input">
+          <i class="fa-solid fa-dog icon"></i>
+          <input
+            type="text"
+            id="petname"
+            class="input"
+            autocomplete="off"
+            placeholder=""
+            value="tom"
+          />
+          <label for="petname" class="label" autocomplete="off">Pet Name</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-cat icon"></i>
+
+          <input
+            type="text"
+            id="species"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="cat"
+          />
+          <label for="species" class="label">Species</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-paw icon"></i>
+          <input
+            type="text"
+            id="breed"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="persian"
+          />
+          <label for="breed" class="label">Breed</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-droplet icon"></i>
+          <input
+            type="text"
+            id="color"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="black"
+          />
+          <label for="color" class="label">Color</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-map-location-dot icon"></i>
+          <input
+            type="text"
+            id="lastseenlocation"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="445 ridge lane"
+          />
+          <label for="lastseenlocation" class="label">Last Seen Location</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-regular fa-calendar-days icon"></i>
+          <input
+            type="text"
+            id="lastseendate"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="2024-03-12"
+          />
+          <label for="lastseendate" class="label"
+            >Last Seen Date (yyyy-mm-dd)</label
+          >
+        </div>
+
+        <div class="input-group">
+          <label for="file" class="file-label"> Upload Your Pet Image </label>
+          <input
+            type="file"
+            id="file"
+            name="imageUpload"
+            accept="image/*"
+            class="input"
+            value="tom"
+          />
+        </div>
+
+        <h2 class="title2">Owner Information</h2>
+
+        <div class="box-input">
+          <i class="fa-regular fa-user icon"></i>
+          <input
+            type="text"
+            id="ownername"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="Alex Johnson"
+          />
+          <label for="ownername" class="label">Owner Name</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-phone icon"></i>
+          <input
+            type="text"
+            id="contactnumber"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="1235550100"
+          />
+          <label for="contactnumber" class="label">Contact Number</label>
+        </div>
+
+        <div class="box-input">
+          <i class="fa-solid fa-envelope icon"></i>
+          <input
+            type="email"
+            id="email"
+            class="input"
+            placeholder=""
+            autocomplete="off"
+            value="alexj@example.com"
+          />
+          <label for="email" class="label">Email</label>
+        </div>
+
+        <button type="submit" class="button">Submit</button>
+      </form>
+      <button
+        type="submit"
+        class="button"
+        id="backBtn"
+        onclick="window.location.href='../../welcomePage.php'"
+      >
+        Back
+      </button>
+    </div>
+    <script src="./fileLostReport.js"></script>
+  </body>
+</html>
