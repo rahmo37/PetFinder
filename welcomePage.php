@@ -196,7 +196,7 @@
       <p id="username">' . $username . ' (Found Report Profile)</p>
       </div>
       <div class="menu-container">
-        <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/viewReports/selectReport.html\'">
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/FileAFoundReport/fileFoundReport.html\'">
         File A Found Report
         </button>
 

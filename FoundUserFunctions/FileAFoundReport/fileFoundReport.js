@@ -1,7 +1,7 @@
-let ownerId = 0;
+let founderId = 0;
 // This function performs the javascript validation and send the data to be added in the database
 function validateForm() {
-  const form = document.getElementById("lostReportForm");
+  const form = document.getElementById("foundReportForm");
 
   form.addEventListener("submit", function (e) {
     e.preventDefault(); // I will use the the fetch Api of javascript for a dynamic user experience
@@ -10,32 +10,34 @@ function validateForm() {
     let formData = new FormData();
 
     // Pet Information Variables
-    let petName = document.getElementById("petname").value;
     let species = document.getElementById("species").value;
     let breed = document.getElementById("breed").value;
     let color = document.getElementById("color").value;
-    let lastSeenLocation = document.getElementById("lastseenlocation").value;
-    let lastSeenDate = document.getElementById("lastseendate").value;
+    let foundLocation = document.getElementById("foundLocation").value;
+    let foundDate = document.getElementById("foundDate").value;
     let file = document.getElementById("file").files[0];
     const acceptedImageType = ["tif", "gif", "jpg", "jpeg", "png"];
     let imageType = null;
 
-    // Owner Information Variables
-    let ownerName = document.getElementById("ownername").value;
+    // Finder Information Variables
+    let founderName = document.getElementById("founderName").value;
     let contactNumber = document.getElementById("contactnumber").value;
     let email = document.getElementById("email").value;
 
+    // console.log(
+    //   species,
+    //   breed,
+    //   color,
+    //   foundLocation,
+    //   foundDate,
+    //   file,
+    //   founderName,
+    //   contactNumber,
+    //   email
+    // );
+
     // In this array i will accumulate all the error messages if any and halt the application before making the api request to the server
     let errorMessages = [];
-
-    //! ===== cheking petName =====
-    // If petName is blank or n/a will convert it to Unknown
-    if (petName.length === 0 || petName.toLowerCase() === "n/a") {
-      petName = "Unknown";
-      formData.append("petname", petName);
-    } else {
-      formData.append("petname", petName);
-    }
 
     //! ===== cheking species =====
     // If species is blank we push an error message
@@ -62,22 +64,19 @@ function validateForm() {
       formData.append("color", color);
     }
 
-    //! ===== cheking Last Seen Location =====
-    // If breed is blank or n/a will convert it to Unknown
-    if (
-      lastSeenLocation.length === 0 ||
-      lastSeenLocation.toLowerCase() === "n/a"
-    ) {
-      lastSeenLocation = "Unknown";
-      formData.append("lastSeenLocation", lastSeenLocation);
+    //! ===== cheking Found Location =====
+    // If Found Location is blank or n/a will convert it to Unknown
+    if (foundLocation.length === 0 || foundLocation.toLowerCase() === "n/a") {
+      foundLocation = "Unknown";
+      formData.append("foundLocation", foundLocation);
     } else {
-      formData.append("lastSeenLocation", lastSeenLocation);
+      formData.append("foundLocation", foundLocation);
     }
 
-    //! ===== cheking Last Seen Date =====
-    if (lastSeenDate.length === 0 || lastSeenDate.toLowerCase() === "n/a") {
-      lastSeenDate = "Unknown";
-    } else if (/[^0-9\-]/.test(lastSeenDate)) {
+    //     //! ===== cheking Last Seen Date =====
+    if (foundDate.length === 0 || foundDate.toLowerCase() === "n/a") {
+      foundDate = "Unknown";
+    } else if (/[^0-9\-]/.test(foundDate)) {
       // Checking for alphabetic or invalid characters
       errorMessages.push(
         "Invalid characters in date. Only numeric and hyphens are allowed. Format: yyyy-mm-dd"
@@ -93,9 +92,9 @@ function validateForm() {
        * \d{2} lastly, matches exactly two digits for day
        */
       const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
-      if (dateRegex.test(lastSeenDate)) {
+      if (dateRegex.test(foundDate)) {
         // If there is a match
-        const dateParts = lastSeenDate.split("-"); // We split the date as individual parts
+        const dateParts = foundDate.split("-"); // We split the date as individual parts
         const year = parseInt(dateParts[0], 10); // extracting the year part and saving it in a year variable
         const month = parseInt(dateParts[1], 10); // extracting the month part and saving it in a month variable
         const day = parseInt(dateParts[2], 10); // extracting the day part and saving it in a day variable
@@ -108,7 +107,7 @@ function validateForm() {
           dateObj.getDate() === day
         ) {
           // After converting and cheking, if the value mathches with the original we accept the date, and as usual accumulate the date in the formData
-          formData.append("lastSeenDate", lastSeenDate);
+          formData.append("foundDate", foundDate);
         } else {
           errorMessages.push(
             "Invalid date. Please enter a date in the format YYYY-MM-DD."
@@ -121,7 +120,7 @@ function validateForm() {
       }
     }
 
-    //! ===== cheking image file =====
+    //     //! ===== cheking image file =====
     // if the no image has been uploaded then we set its value to undefined
     if (file !== undefined) {
       imageType = file.name.split(".")[1];
@@ -136,12 +135,12 @@ function validateForm() {
     }
 
     // If Name is blank we push an error message
-    if (ownerName.length === 0) {
+    if (founderName.length === 0) {
       errorMessages.push("The Name field must be filled!");
-    } else if (/\d/.test(ownerName)) {
+    } else if (/\d/.test(founderName)) {
       errorMessages.push("The Name field cannot have any numeric values!");
     } else {
-      formData.append("ownerName", ownerName);
+      formData.append("founderName", founderName);
     }
 
     if (contactNumber.length === 0) {
@@ -167,9 +166,9 @@ function validateForm() {
         errorMessages.map((err, index) => `${index + 1}. ${err}`).join("\n")
       );
     } else {
-      uniqueOrAlreadyExistContactNumber(ownerName, contactNumber, email)
+      uniqueOrAlreadyExistContactNumber(founderName, contactNumber, email)
         .then(() => {
-          if (ownerId === 0) {
+          if (founderId === 0) {
             return uniqueEmail(email);
           }
         })
@@ -178,22 +177,21 @@ function validateForm() {
           // Appending the rest of the information
           formData.append("contactNumber", contactNumber);
           formData.append("email", email);
-          formData.append("ownerId", ownerId);
+          formData.append("founderId", founderId);
           formData.append("flag", "addRecord");
 
           // Sending the record to be added in the database
-          fetch("processLostReport.php", {
+          fetch("processFoundReport.php", {
             method: "POST",
             body: formData,
           })
             .then((response) => response.text())
             .then((data) => {
               console.log(data);
-              alert("Your lost report has been filed!");
+              alert("Your found report has been filed!");
             });
           form.reset();
-          ownerId = 0;
-          // Continue with form submission or further processing here
+          founderId = 0;
         })
         .catch((error) => {
           alert(error);
@@ -204,15 +202,15 @@ function validateForm() {
 
 validateForm();
 
-function uniqueOrAlreadyExistContactNumber(ownerName, contactNumber, email) {
+function uniqueOrAlreadyExistContactNumber(founderName, contactNumber, email) {
   return new Promise((resolve, reject) => {
-    fetch("processLostReport.php", {
+    fetch("processFoundReport.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: `flag=checkContactNumberAndEmail&ownerName=${encodeURIComponent(
-        ownerName
+      body: `flag=checkContactNumberAndEmail&founderName=${encodeURIComponent(
+        founderName
       )}&contactNumber=${encodeURIComponent(
         contactNumber
       )}&email=${encodeURIComponent(email)}`,
@@ -221,10 +219,10 @@ function uniqueOrAlreadyExistContactNumber(ownerName, contactNumber, email) {
       .then((data) => {
         if (data.includes("invalid")) {
           reject(
-            "The contact number entered is associated with another name and email. Please check all owner information and try again."
+            "The contact number entered is associated with another name and email. Please check all founder information and try again."
           );
         } else if (Number(data)) {
-          ownerId = Number(data);
+          founderId = Number(data);
           resolve();
         }
         resolve();
@@ -239,7 +237,7 @@ function uniqueOrAlreadyExistContactNumber(ownerName, contactNumber, email) {
 
 function uniqueEmail(email) {
   return new Promise((resolve, reject) => {
-    fetch("processLostReport.php", {
+    fetch("processFoundReport.php", {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -250,7 +248,7 @@ function uniqueEmail(email) {
       .then((data) => {
         if (data.includes("invalid")) {
           reject(
-            "The Email entered is associated with another owner account. Please check the email again."
+            "The Email entered is associated with another founder account. Please check the email again."
           );
         } else {
           resolve();

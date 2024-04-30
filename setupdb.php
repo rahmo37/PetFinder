@@ -144,7 +144,7 @@ function insertRecordInLostReportTable($conn)
       'Color' => 'Black',
       'LastSeenLocation' => '123 Park Lane',
       'LastSeenDate' => '2024-03-25',
-      'PhotoURL' => 'Doberman.jpg',
+      'PhotoURL' => 'petLost1.jpg',
       'ReportStatus' => "Pending"
     ],
     [
@@ -155,7 +155,7 @@ function insertRecordInLostReportTable($conn)
       'Color' => 'Light Golden',
       'LastSeenLocation' => '123 Park Lane',
       'LastSeenDate' => '2024-03-25',
-      'PhotoURL' => 'Labrador.jpg',
+      'PhotoURL' => 'petLost2.jpg',
       'ReportStatus' => "Pending"
     ],
     [
@@ -166,7 +166,7 @@ function insertRecordInLostReportTable($conn)
       'Color' => 'Grey',
       'LastSeenLocation' => '456 Maple Street',
       'LastSeenDate' => '2024-03-27',
-      'PhotoURL' => 'Siamese.jpg',
+      'PhotoURL' => 'petLost3.jpg',
       'ReportStatus' => "Pending"
     ],
     [
@@ -177,7 +177,7 @@ function insertRecordInLostReportTable($conn)
       'Color' => 'Golden',
       'LastSeenLocation' => '789 Oak Avenue',
       'LastSeenDate' => '2024-03-29',
-      'PhotoURL' => 'Golden Retriever.jpg',
+      'PhotoURL' => 'petLost4.jpg',
       'ReportStatus' => "Accepted"
     ],
     [
@@ -188,7 +188,7 @@ function insertRecordInLostReportTable($conn)
       'Color' => 'Grey / White',
       'LastSeenLocation' => '101 Pine Road',
       'LastSeenDate' => '2024-04-01',
-      'PhotoURL' => 'Persian.jpg',
+      'PhotoURL' => 'petLost5.jpg',
       'ReportStatus' => "Accepted"
     ],
     [
@@ -349,7 +349,7 @@ function insertRecordInFinderReports($conn)
       'FinderID' => 1,
       'FoundLocation' => '333 Apple la',
       'FoundDate' => '2024-04-09',
-      'PhotoURL' => 'Macaw.jpg',
+      'PhotoURL' => 'petFound1.jpg',
       'Species' => 'Bird',
       'Breed' => 'Macaw',
       'Color' => 'Blue',
@@ -359,7 +359,7 @@ function insertRecordInFinderReports($conn)
       'FinderID' => 1,
       'FoundLocation' => 'Central Park',
       'FoundDate' => '2024-04-01',
-      'PhotoURL' => 'DomesticShorthair.jpg',
+      'PhotoURL' => 'petFound2.jpg',
       'Species' => 'Cat',
       'Breed' => 'Domestic Short hair',
       'Color' => 'Brown',
@@ -369,7 +369,7 @@ function insertRecordInFinderReports($conn)
       'FinderID' => 2,
       'FoundLocation' => '123 Wild Lane',
       'FoundDate' => '2024-05-02',
-      'PhotoURL' => 'Ragdoll.jpg',
+      'PhotoURL' => 'petFound3.jpg',
       'Species' => 'Cat',
       'Breed' => 'Ragdoll',
       'Color' => 'White',
@@ -379,7 +379,7 @@ function insertRecordInFinderReports($conn)
       'FinderID' => 3,
       'FoundLocation' => '321 Lava Lane',
       'FoundDate' => '2024-04-03',
-      'PhotoURL' => 'Beagle.jpg',
+      'PhotoURL' => 'petFound4.jpg',
       'Species' => 'Dog',
       'Breed' => 'Beagle',
       'Color' => 'Red',

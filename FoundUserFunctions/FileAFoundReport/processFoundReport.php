@@ -28,29 +28,28 @@ if (!isset($_SESSION['username'])) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['flag']) && $_POST['flag'] === 'checkContactNumberAndEmail') {
-    $ownerName = htmlspecialchars($_POST["ownerName"]);
+    $founderName = htmlspecialchars($_POST["founderName"]);
     $contactNumber = htmlspecialchars($_POST["contactNumber"]);
     $email = htmlspecialchars($_POST["email"]);
-    $ownerId = 0;
+    $founderId = 0;
 
-    $query = "SELECT ownerId, name, email FROM owners WHERE contactNumber = ?";
+    $query = "SELECT finderId, name, email FROM finder WHERE contactNumber = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $contactNumber);
     $stmt->execute();
     $result = $stmt->get_result();
-    // echo ($owneName . $contactNumber . $email);
 
     if ($result->num_rows > 0) {
 
       while ($row = $result->fetch_assoc()) {
-        if (strtolower($row['name']) === strtolower($ownerName) && strtolower($row['email']) === strtolower($email)) {
+        if (strtolower($row['name']) === strtolower($founderName) && strtolower($row['email']) === strtolower($email)) {
 
-          $ownerId = $row['ownerId'];
-          exit($ownerId . "");
+          $founderId = $row['finderId'];
+          exit($founderId . "");
           break;
         }
       }
-      if ($ownerId === 0) {
+      if ($founderId === 0) {
         exit("invalid");
       }
     } else {
@@ -58,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
   } else if (isset($_POST['flag']) && $_POST['flag'] === 'checkEmail') {
     $email = htmlspecialchars($_POST['email']);
-    $query = "SELECT 1 FROM owners WHERE email = ?";
+    $query = "SELECT 1 FROM finder WHERE email = ?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -73,48 +72,47 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     var_dump($_FILES);
 
     // Pet Variables
-    $petName = ucfirst(htmlspecialchars($_POST["petname"]));
     $species = ucfirst(htmlspecialchars($_POST["species"]));
     $breed = ucfirst(htmlspecialchars($_POST["breed"]));
     $color = ucfirst(htmlspecialchars($_POST["color"]));
-    $lastSeenLocation = ucfirst(htmlspecialchars($_POST["lastSeenLocation"]));
-    $lastSeenDate = htmlspecialchars($_POST["lastSeenDate"]);
+    $foundLocation = ucfirst(htmlspecialchars($_POST["foundLocation"]));
+    $foundDate = htmlspecialchars($_POST["foundDate"]);
     if (empty($_FILES)) {
       $photoUrl = null;
       $photoExt = null;
     } else {
-      $photoUrl = "petLost";
+      $photoUrl = "petFound";
       $photoExt = $_POST["imageExt"];
     }
     // echo $photoUrl;
     // echo $photoExt;
     $reportStatus = "Pending";
 
-    // Owner Variables
-    $ownerId = intval(htmlspecialchars($_POST["ownerId"]));
-    $ownerName = ucfirst(htmlspecialchars($_POST["ownerName"]));
+    // Founder Variables
+    $founderId = intval(htmlspecialchars($_POST["founderId"]));
+    $founderName = ucfirst(htmlspecialchars($_POST["founderName"]));
     $contactNumber = htmlspecialchars($_POST["contactNumber"]);
     $email = htmlspecialchars($_POST["email"]);
 
     // Will use a transaction here
     $conn->begin_transaction();
     try {
-      // we insert the owner first because without an owner, a lostReport cannot exist
-      if ($ownerId === 0) { // if the ownerId is not 0, that means the owner already exists
-        $query = "INSERT INTO Owners (Name, ContactNumber, Email) Values (?, ?, ?)";
+      // we insert the founder first because without a founder, a founderReport cannot exist
+      if ($founderId === 0) { // if the founderId is not 0, that means the founder already exists
+        $query = "INSERT INTO finder (Name, ContactNumber, Email) Values (?, ?, ?)";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("sss", $ownerName, $contactNumber, $email);
+        $stmt->bind_param("sss", $founderName, $contactNumber, $email);
         $stmt->execute();
-        // After owner is inserted we retrive the ownerId that is generated automatically. we update the $ownerId with retrived id
-        $ownerId = $conn->insert_id;
+        // After founder is inserted we retrive the founder that is generated automatically. we update the $founderId with retrived id
+        $founderId = $conn->insert_id;
         $stmt->close();
       }
-      echo $ownerId;
+      echo $founderId;
 
-      // After successful owner insertion, We insert the record
-      $query = "INSERT INTO lostreport (OwnerID, PetName, Species, Breed, Color, LastSeenLocation, LastSeenDate, PhotoURL, ReportStatus) Values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+      // After successful founder insertion, We insert the record
+      $query = "INSERT INTO finderreports (FinderID, Species, Breed, Color, FoundLocation, FoundDate, PhotoURL, ReportStatus) Values (?, ?, ?, ?, ?, ?, ?, ?)";
       $stmt = $conn->prepare($query);
-      $stmt->bind_param("issssssss", $ownerId, $petName, $species, $breed, $color, $lastSeenLocation, $lastSeenDate, $photoUrl, $reportStatus);
+      $stmt->bind_param("isssssss", $founderId, $species, $breed, $color, $foundLocation, $foundDate, $photoUrl, $reportStatus);
       $stmt->execute();
       $reportId = $conn->insert_id;
       $stmt->close();
@@ -122,7 +120,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($photoUrl !== null) {
         // Updating the photo url, adding the reportId and the extension at the end.
         $updatedUrl = $photoUrl . $reportId . $photoExt;
-        $query = "UPDATE lostreport SET PhotoURL = ? WHERE ReportID = ?";
+        $query = "UPDATE finderreports SET PhotoURL = ? WHERE ReportID = ?";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("si", $updatedUrl, $reportId);
         $stmt->execute();
@@ -137,10 +135,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
 
       // Finally we link the report with the currently logged-in user
-      $finderReportId = null;
+      $lostReportID = null;
       $query = "INSERT INTO usersreportslink (UserName, LostReportID, FinderReportID) Values (?, ?, ?)";
       $stmt = $conn->prepare($query);
-      $stmt->bind_param("sii", $username, $reportId, $finderReportId);
+      $stmt->bind_param("sii", $username, $lostReportID, $reportId);
       $stmt->execute();
       $stmt->close();
 

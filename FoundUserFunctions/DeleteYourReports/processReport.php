@@ -34,13 +34,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $stmt->close();
 
-
+        // When deleting the report, we also want to delete the image from the server, for that we need the filename of the image, to delete
+        $photoUrl = null;
+        $query = "SELECT PhotoURL FROM finderreports WHERE reportId = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $reportId);
+        $stmt->execute();
+        $stmt->bind_result($photoUrl);
+        $stmt->fetch();
+        $stmt->close();
 
         // now we can safely delete the record from the finderreports table
         $stmt = $conn->prepare("DELETE FROM finderreports WHERE reportId = ?");
         $stmt->bind_param("i", $reportId);
         $stmt->execute();
         $stmt->close();
+
+        // Deleting the file if it exists
+        if ($photoUrl !== null) {
+          $filePath = '../../Images/' . $photoUrl;
+          if (file_exists($filePath)) {
+            unlink($filePath);
+          } else {
+            echo "Failed";
+          }
+        }
 
         // After deleteing the report, now we decide whether we are going to delete the finder or if they have more entries in the finderreports table.
         $stmt = $conn->prepare("SELECT COUNT(*) FROM finderreports WHERE finderId = ?");
