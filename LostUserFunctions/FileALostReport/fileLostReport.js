@@ -75,8 +75,10 @@ function validateForm() {
     }
 
     //! ===== cheking Last Seen Date =====
+
     if (lastSeenDate.length === 0 || lastSeenDate.toLowerCase() === "n/a") {
       lastSeenDate = "Unknown";
+      formData.append("lastSeenDate", lastSeenDate);
     } else if (/[^0-9\-]/.test(lastSeenDate)) {
       // Checking for alphabetic or invalid characters
       errorMessages.push(

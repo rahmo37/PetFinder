@@ -76,6 +76,7 @@ function validateForm() {
     //     //! ===== cheking Last Seen Date =====
     if (foundDate.length === 0 || foundDate.toLowerCase() === "n/a") {
       foundDate = "Unknown";
+      formData.append("foundDate", foundDate);
     } else if (/[^0-9\-]/.test(foundDate)) {
       // Checking for alphabetic or invalid characters
       errorMessages.push(

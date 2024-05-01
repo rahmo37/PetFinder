@@ -109,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
       echo $founderId;
 
-      // After successful founder insertion, We insert the record
+      // After successful founder insertion, We insert the record finderreports
       $query = "INSERT INTO finderreports (FinderID, Species, Breed, Color, FoundLocation, FoundDate, PhotoURL, ReportStatus) Values (?, ?, ?, ?, ?, ?, ?, ?)";
       $stmt = $conn->prepare($query);
       $stmt->bind_param("isssssss", $founderId, $species, $breed, $color, $foundLocation, $foundDate, $photoUrl, $reportStatus);

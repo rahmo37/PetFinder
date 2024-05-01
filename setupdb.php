@@ -308,7 +308,7 @@ function createFinderReportsTable($conn)
     ReportID INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     FinderID INT NOT NULL,
     FoundLocation VARCHAR(255) NOT NULL,
-    FoundDate DATE NOT NULL,
+    FoundDate VARCHAR(15) NOT NULL,
     PhotoURL VARCHAR(255),
     Species VARCHAR(50) NOT NULL,
     Breed VARCHAR(50) NOT NULL,

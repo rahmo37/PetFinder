@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // If the sum of the number is greater than 0 then we send the corresponding field as a string, i will handle the sting in the registration page with javascript
     if (($userExists + $emailExist) > 0) {
       // Using ternerry operator to check which attribute has a value of 1, or if both.
-      exit($userExists > 0 ? "username" : "") . " " . ($emailExist > 0 ? "email" : "");
+      exit(($userExists > 0 ? "username" : "") . " " . ($emailExist > 0 ? "email" : ""));
     } else {
       exit("");
     }
