@@ -1,4 +1,6 @@
 <?php
+// I certify that this submission is my own original work
+
 require_once '../login.php';
 // Establishing connection with database
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -11,7 +13,7 @@ if ($conn->connect_error) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   //! ===== cheking unique Username and Email =====
-  if (isset($_POST["flag"]) && $_POST["flag"] === "checkUsernameAndEmail") {
+  if (isset($_POST["flag"]) && $_POST["flag"] === "checkUsernameAndEmail") { // If the flag sent is checkUsernameAndEmail
     $username = htmlspecialchars($_POST["username"]);
     $email = htmlspecialchars($_POST["email"]);
 
@@ -25,28 +27,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userExists = $result->num_rows;
 
     // Email
-    $query = "SELECT 1 FROM users WHERE email = ?";
+
+    $query = "SELECT 1 FROM users WHERE email = ?"; // This query will return 1 for each row that matches the Email
     $stmt = $conn->prepare($query);
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
     $emailExist = $result->num_rows;
-
     // If the sum of the number is greater than 0 then we send the corresponding field as a string, i will handle the sting in the registration page with javascript
     if (($userExists + $emailExist) > 0) {
       // Using ternerry operator to check which attribute has a value of 1, or if both.
       exit(($userExists > 0 ? "username" : "") . " " . ($emailExist > 0 ? "email" : ""));
     } else {
+      // Else i send empty string indicating to client-side that there are no errors
       exit("");
     }
   }
   //! ===== Adding the user after server side validation =====
-  else if (isset($_POST["flag"]) && $_POST["flag"] === "addUser") {
+  else if (isset($_POST["flag"]) && $_POST["flag"] === "addUser") { // If the flag send is add user
 
     $username = htmlspecialchars($_POST["username"]);
     $email = htmlspecialchars($_POST["email"]);
     $password = htmlspecialchars($_POST["password"]);
 
+    // Start Here
     // Server Side Validation
     // Validating inputs before insertion
     $fail = "";
@@ -57,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($fail === "") {
       $password = password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT);
       $isAdmin = 0;
-      // echo $username . $email . $password . $confPass; 
+      // echo $username . $email . $password . $confPass;
       $query = "INSERT INTO users (username, password, email, isAdmin)
     VALUES (?,?,?,?);";
       $stmt = $conn->prepare($query);

@@ -30,7 +30,6 @@ function validateForm() {
     const email = document.getElementById("email").value;
     const password = document.getElementById("pass").value;
     const confPass = document.getElementById("confPass").value;
-    const regexForUserName = /^[a-zA-Z0-9_-]+$/;
 
     // In this array i will accumulate all the error messages if any and halt the application before making the api request to the server
     let errorMessage = [];
@@ -42,7 +41,7 @@ function validateForm() {
         "The username field must be filled out and at least 5 characters long"
       );
     }
-    if (!regexForUserName.test(username)) {
+    if (!/^[a-zA-Z0-9_-]+$/.test(username)) {
       // No symbols allowed other than _ and - are allowed
       errorMessage.push(
         "The username must only containe a-z, A-Z, 0-9, - and _"
@@ -52,6 +51,11 @@ function validateForm() {
     //! ===== cheking email =====
     if (email.length === 0) {
       errorMessage.push("The email field must be filled out");
+    } else if (
+      !(email.indexOf(".") > 0 && email.indexOf("@") > 0) ||
+      /[^a-zA-Z0-9.@_-]/.test(email)
+    ) {
+      errorMessage.push("The Email address is invalid");
     }
 
     //! ===== cheking password =====
@@ -101,9 +105,9 @@ function validateForm() {
           .then((response) => response.text())
           .then((data) => {
             alert(data);
-            if (data === "User account created succesfully") {
+            if (data.includes("User account created succesfully")) {
               form.reset();
-              window.location.href = "login.html";
+              window.location.href = "./login.html";
             }
           });
       }
@@ -138,7 +142,7 @@ function doExistUserNameEmail(username, email, callback) {
   })
     .then((response) => response.text())
     .then((data) => {
-      console.log(data);
+      // console.log(data);
       // An error array to accumulate the errors
       let errors = [];
       if (data.includes("username")) {

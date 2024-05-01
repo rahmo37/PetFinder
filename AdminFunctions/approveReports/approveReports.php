@@ -275,7 +275,7 @@ HTML;
         .then(response => response.text())
         .then(data => {
           // if deletion is successful
-          if (data === "Successful") {
+          if (data.includes("Successful")) {
             let message = document.getElementById("message-" + messageId);
             let color = status === "Accepted" ? "#37ea18" : "#ff2800";
             message.style.color = color;

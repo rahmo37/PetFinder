@@ -40,7 +40,7 @@
     <h2 style="color: white; text-shadow: 2px 2px 4px #000000;">Please click the below link to go to the login page</h2>
     <a href="../../UserLoginAndRegistration/login.html" class="menu-button">Login Page</a>
     </div>';
-    die();
+      die();
     } else {
       $username = $_SESSION['username'];
     }
@@ -175,15 +175,12 @@ HTML;
         .then(response => response.text())
         .then(data => {
           // if deletion is successful
-          if (data === "Successful") {
+          if (data.includes("Successful")) {
             let message = document.getElementById("message-" + messageId);
             let color = "#ff2800";
             message.style.color = color;
             message.innerHTML = "Deleted";
             message.style.opacity = "1";
-
-
-
             // The buttonElement.closest('.container') is a JavaScript method used to find the nearest ancestor of the buttonElement that matches the specified selector—in this case, .container.
             let reportContainer = buttonElement.closest('.container');
             reportContainer.style.opacity = '0';

@@ -1,12 +1,17 @@
 <?php
+// I certify that this submission is my own original work
 
-if (isset($_GET['logout'])) {
+// This file manages the logout process. Checks for an actual logout request, Starts the session if not already started, clears all session variables, deletes the session cookie, and destroys the session to ensure a complete logout. After ending the session, it redirects the user to login.html.
+
+//! ===== Checking for logout request and then calling the endSession() =====
+if (isset($_GET['logout'])) { // Checking for a log out request
   endSession();
   header("Location: login.html");
   exit();
 }
 
 
+//! ===== End Session Variable =====
 function endSession()
 {
   // Making sure the session is started
@@ -34,8 +39,3 @@ function endSession()
   // Destroy the session
   session_destroy();
 }
-
-endSession();
-
-header("Location: login.html");
-exit();

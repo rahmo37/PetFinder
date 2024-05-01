@@ -1,10 +1,13 @@
 <?php
+// I certify that this submission is my own original work
+// <This file sets up the database, creates 6 different tables, 4 application tables and 2 user related tables and inserts data inside them
 require_once 'login.php';
 $conn = new mysqli($hn, $un, $pw, $db);
 
 if ($conn->connect_error) {
   die("Fatal Error");
 } else {
+  //! ===== Dropping All Tables =====
   // At first droping all the if they exists so new one can be added
   $query = "DROP TABLE IF EXISTS UsersReportsLink;";
   $query .= "DROP TABLE IF EXISTS Users;";
@@ -13,6 +16,7 @@ if ($conn->connect_error) {
   $query .= "DROP TABLE IF EXISTS FinderReports;";
   $query .= "DROP TABLE IF EXISTS Finder;";
 
+  // Using multiquery here since, we have to drop 6 tables with 6 differnt queries
   $result = $conn->multi_query($query);
   if (!$result) {
     die("Unable to drop Tables..." . $conn->error);
@@ -29,11 +33,13 @@ if ($conn->connect_error) {
 
 //! ------------------------------
 
+//! ===== Creating owner table and inserting data =====
+
 // This function create the owner table
 // Creating Owners Table first since it does not have any foreign key
 function createOwnersTable($conn)
 {
-  // query to create the owners table
+  // Query to create the owners table. The combination of Name ContactNumber and Email needs to unique
   $query = "CREATE TABLE IF NOT EXISTS Owners (
       OwnerID INT NOT NULL AUTO_INCREMENT,
       Name VARCHAR(100) NOT NULL,
@@ -42,7 +48,7 @@ function createOwnersTable($conn)
       PRIMARY KEY (OwnerID),
       UNIQUE(ContactNumber),
       UNIQUE(Email),
-      UNIQUE(Name, ContactNumber, Email)
+      UNIQUE(Name, ContactNumber, Email) 
     )";
 
   // Executing and saving the result true or false
@@ -90,8 +96,9 @@ function insertRecordInOwners($conn)
 
 //! ------------------------------
 
+//! ===== Creating Lost report table and inserting data =====
 
-// This function LostReport table
+// This function creates LostReport table
 function createLostReportTable($conn)
 {
   // Query to create the LostReport table
@@ -232,8 +239,12 @@ function insertRecordInLostReportTable($conn)
 
 //! ------------------------------
 
+//! ===== Createing and inserting data in Finder Table =====
+
 function createFinderTable($conn)
 {
+
+  // Query that finder table and necessary columns
   $query = "CREATE TABLE IF NOT EXISTS Finder (
     FinderId INT NOT NULL AUTO_INCREMENT,
     Name VARCHAR(100) NOT NULL,
@@ -299,6 +310,8 @@ function insertRecordInFinders($conn)
 }
 
 //! ----------------
+
+//! ===== Createing and inserting data in FinderReportsTable =====
 
 // This function creates the FinderReports table
 function createFinderReportsTable($conn)
@@ -383,7 +396,7 @@ function insertRecordInFinderReports($conn)
       'Species' => 'Dog',
       'Breed' => 'Beagle',
       'Color' => 'Red',
-      'ReportStatus' => 'Pending'
+      'ReportStatus' => 'Accepted'
     ]
   ];
 
@@ -409,6 +422,8 @@ function insertRecordInFinderReports($conn)
 }
 
 //! ----------------
+
+//! ===== Creating and inserting data in UsersTable =====
 
 function createUsersTable($conn)
 {
@@ -441,23 +456,24 @@ function insertRecordInUsers($conn)
   // The Array that contains all the Owners information
   $users = [
     [
-      'UserName' => 'Alex123',
-      'Password' => 'Alex123',
-      'Email' => 'alexj@example.com',
-      'IsAdmin' => 0
-    ],
-    [
       'UserName' => 'Obaedur123',
       'Password' => 'Obaedur123',
-      'Email' => 'brendal@example.net',
+      'Email' => 'obaedur123@gmail.com',
       'IsAdmin' => 1
+    ], 
+    [
+      'UserName' => 'Alex123',
+      'Password' => 'Alex123',
+      'Email' => 'alexj@gmail.com',
+      'IsAdmin' => 0
     ],
     [
       'UserName' => 'John123',
       'Password' => 'John123',
       'Email' => 'johnJ@example.com',
       'IsAdmin' => 0
-    ]
+    ],
+
   ];
   // Preparing the query
   $query = 'INSERT INTO Users(UserName,Password,Email,IsAdmin) VALUES(?,?,?,?)';
@@ -484,6 +500,9 @@ function insertRecordInUsers($conn)
 
 //! ----------------
 
+//! ===== Creating and inserting data in UsersReportsLinkTable =====
+
+// The purpose of this table is to Link users and reports
 function createUsersReportsLinkTable($conn)
 {
   // query to create the UsersReportsLink table
@@ -561,7 +580,7 @@ function insertRecordInUsersReportsLink($conn)
 
 //! ------------------------------
 
-// Calling the functions to create the table and insert data
+// Finally invoking the functions to create the table and insert data
 createOwnersTable($conn);
 createLostReportTable($conn);
 createFinderTable($conn);

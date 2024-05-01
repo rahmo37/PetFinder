@@ -1,3 +1,6 @@
+<!-- I certify that this submission is my own original work -->
+
+<!-- This file contains 3 different menus and displays the corresponding menu based on the user’s status, Admin, Lost or Found user -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -122,9 +125,10 @@
 
 <body>
   <?php
+  //! ===== Loading Menu based on the variable in the session array  =====
   session_start();
   // var_dump($_SESSION);
-  // Check if isAdmin is true in the session
+  // Checking if isAdmin is true in the session, then we load admin menu
   if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin']) {
     $username = htmlspecialchars($_SESSION['username']);
     echo '
@@ -154,7 +158,7 @@
             Logout
           </a>
           </div>';
-  } else if (isset($_SESSION['reportType']) && $_SESSION['reportType'] === "lost") {
+  } else if (isset($_SESSION['reportType']) && $_SESSION['reportType'] === "lost") { // Checking if reportType is lost in the session, then we load lost profile menu
     $username = htmlspecialchars($_SESSION['username']);
     echo '
     <div class="container">
@@ -187,7 +191,7 @@
       Logout
     </a>
     </div>';
-  } else if (isset($_SESSION['reportType']) && $_SESSION['reportType'] === "found") {
+  } else if (isset($_SESSION['reportType']) && $_SESSION['reportType'] === "found") { // Checking if reportType is found in the session, then we found profile menu
     $username = htmlspecialchars($_SESSION['username']);
     echo '
     <div class="container">
@@ -220,7 +224,7 @@
       Logout
     </a>
     </div>';
-  } else {
+  } else { //If the user is not logged in and tries to access this page, i provide the link to redirect the user to the login page
     echo '
     <div class="container">
     <h1 id="welcomeTitle">Page Not Found.</h1>
