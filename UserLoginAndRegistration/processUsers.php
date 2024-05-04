@@ -1,6 +1,8 @@
 <?php
 // I certify that this submission is my own original work
 
+// Verifies the uniqueness of a username and email to ensure that each user is distinct, Performs Server-side validation, after validation adds the user to the database, also checks username and password when the user is trying to login and starts a session upon successful login
+
 require_once '../login.php';
 // Establishing connection with database
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -50,7 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = htmlspecialchars($_POST["email"]);
     $password = htmlspecialchars($_POST["password"]);
 
-    // Start Here
     // Server Side Validation
     // Validating inputs before insertion
     $fail = "";
@@ -59,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $fail .= validate_email($email);
 
     if ($fail === "") {
-      $password = password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT);
+      $password = password_hash(htmlspecialchars($_POST["password"]), PASSWORD_DEFAULT); // Password hashing
       $isAdmin = 0;
       // echo $username . $email . $password . $confPass;
       $query = "INSERT INTO users (username, password, email, isAdmin)
@@ -99,20 +100,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $stmt->bind_param("s", $username);
       $stmt->execute();
       $result = $stmt->get_result();
-      if ($result->num_rows > 0) {
+      if ($result->num_rows > 0) { 
         $row = $result->fetch_assoc();
         $storedHash = $row['Password'];
-        $isAdmin = $row['IsAdmin'] ? true : false;
+        $isAdmin = $row['IsAdmin'] ? true : false; // Storing the status of the isAdmin 
         if (password_verify($password, $storedHash)) {
           session_start();
           session_regenerate_id(true); // Regenrating the session id when a new login occurs
           $_SESSION = array(); // Deleting all prevous data
+          // Saving information in the Session
           $_SESSION['isAdmin'] = $isAdmin;
           $_SESSION['reportType'] = $reportType;
           $_SESSION['username'] = $username;
           exit("");
         } else {
-          exit("password");
+          exit("password"); // If password is not a match we send the string password
         }
       }
     } else {

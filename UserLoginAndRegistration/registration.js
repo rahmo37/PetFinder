@@ -1,3 +1,8 @@
+// I certify that this submission is my own original work
+
+// This file contains code for form validation; performs checks on the user input such as the username, email, password and confirm password if the meet the criteria. Communicates with the server to verify if the username and email are unique, and upon checking performs appropriate action, such as displaying error messages. Upon successful input checks the form data is submitted to the server and redirects the user to the login page
+
+
 window.onload = () => {
   setupPasswordToggle("pass", "eye");
   setupPasswordToggle("confPass", "eye2");
