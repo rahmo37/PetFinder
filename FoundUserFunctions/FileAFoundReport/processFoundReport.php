@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
       }
 
-      // Finally we link the report with the currently logged-in user
+      // Finally we connect the report with the currently logged-in user
       $lostReportID = null;
       $query = "INSERT INTO usersreportslink (UserName, LostReportID, FinderReportID) Values (?, ?, ?)";
       $stmt = $conn->prepare($query);
