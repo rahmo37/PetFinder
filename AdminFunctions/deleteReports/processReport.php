@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Deleting the file if it exists
         if ($photoUrl !== null) {
-          $filePath = '../../Images/' . $photoUrl;
+          $filePath = '../../images/' . $photoUrl;
           if (file_exists($filePath)) {
             unlink($filePath);
           } else {
@@ -130,7 +130,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // Deleting the file if it exists
         if ($photoUrl !== null) {
-          $filePath = '../../Images/' . $photoUrl;
+          $filePath = '../../images/' . $photoUrl;
           if (file_exists($filePath)) {
             unlink($filePath);
           } else {

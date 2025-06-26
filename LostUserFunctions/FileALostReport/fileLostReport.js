@@ -17,7 +17,7 @@ function validateForm() {
     let lastSeenLocation = document.getElementById("lastseenlocation").value;
     let lastSeenDate = document.getElementById("lastseendate").value;
     let file = document.getElementById("file").files[0];
-    const acceptedImageType = ["tif", "gif", "jpg", "jpeg", "png"];
+    const acceptedImageType = ["tif", "gif", "jpg", "jpeg", "png", "JPG"];
     let imageType = null;
 
     // Owner Information Variables

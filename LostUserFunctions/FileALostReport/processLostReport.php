@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
       // we insert the owner first because without an owner, a lostReport cannot exist
       if ($ownerId === 0) { // if the ownerId is not 0, that means the owner already exists
-        $query = "INSERT INTO Owners (Name, ContactNumber, Email) Values (?, ?, ?)";
+        $query = "INSERT INTO owners (Name, ContactNumber, Email) Values (?, ?, ?)";
         $stmt = $conn->prepare($query);
         $stmt->bind_param("sss", $ownerName, $contactNumber, $email);
         $stmt->execute();
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         // Now i save the actual image in the server
-        $imageDirectory = "../../Images/";
+        $imageDirectory = "../../images/";
         $imageFullPath = $imageDirectory . $updatedUrl;
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $imageFullPath)) {
           throw new Exception("Error uploading file in the server");

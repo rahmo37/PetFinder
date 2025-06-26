@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <link rel="stylesheet" href="./deleteUserLostReports.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
   <title>Document</title>
@@ -62,11 +63,11 @@
     l.LastSeenDate AS lastSeenDate,
     l.PhotoURL AS photoURL
 FROM 
-    UsersReportsLink ul
+    usersreportslink ul
 JOIN 
-    LostReport l ON ul.LostReportID = l.ReportID
+    lostreport l ON ul.LostReportID = l.ReportID
 JOIN 
-    Owners o ON l.OwnerID = o.OwnerID
+    owners o ON l.OwnerID = o.OwnerID
 WHERE 
     ul.UserName = ?";
 
@@ -98,7 +99,7 @@ WHERE
       $htmlContent = <<<HTML
       <div class="container" data-report-id="{$reportID}">
         <div class="img-name-container">
-          <img src="../../Images/{$PhotoURL}" alt="" id="petImage" />
+          <img src="../../images/{$PhotoURL}" alt="" id="petImage" />
           <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
           <div class="name-container">
             <p id="petName">{$petName}</p>

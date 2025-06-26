@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <link rel="stylesheet" href="./userLostReports.css">
   <title>Document</title>
 </head>
@@ -41,6 +42,7 @@
     }
 
     echo '<p id="title">Your Current Reports</p>';
+
     // Building the query for viewing lost reports
     $query = "SELECT 
     l.PetName AS petName,
@@ -56,13 +58,14 @@
     l.LastSeenDate AS lastSeenDate,
     l.PhotoURL AS photoURL
 FROM 
-    UsersReportsLink ul
+    usersreportslink ul
 JOIN 
-    LostReport l ON ul.LostReportID = l.ReportID
+    lostreport l ON ul.LostReportID = l.ReportID
 JOIN 
-    Owners o ON l.OwnerID = o.OwnerID
+    owners o ON l.OwnerID = o.OwnerID
 WHERE 
     ul.UserName = ?";
+
 
     $stmt = $conn->prepare($query);
     $stmt->bind_param('s', $username);
@@ -90,7 +93,7 @@ WHERE
       $htmlContent = <<<HTML
         <div class="container">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
             <div class="name-container">
               <p id="petName">$petName</p>
             </div>

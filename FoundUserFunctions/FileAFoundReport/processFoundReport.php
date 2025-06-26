@@ -127,7 +127,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         // Now i save the actual image in the server
-        $imageDirectory = "../../Images/";
+        $imageDirectory = "../../images/";
         $imageFullPath = $imageDirectory . $updatedUrl;
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $imageFullPath)) {
           throw new Exception("Error uploading file in the server");

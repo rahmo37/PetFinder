@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./deleteUserFoundReports.css">
   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <title>Document</title>
 </head>
 
@@ -61,11 +62,11 @@
     f.Email AS email,
     fr.PhotoURL
     FROM 
-      UsersReportsLink ul
+      usersreportslink ul
     JOIN 
       finderreports fr ON ul.FinderReportID = fr.ReportID
     JOIN 
-      Finder f ON fr.FinderID = f.FinderID
+      finder f ON fr.FinderID = f.FinderID
     WHERE 
         ul.UserName = ?";
 
@@ -96,7 +97,7 @@
       $htmlContent = <<<HTML
         <div class="container" data-report-id="{$reportID}" data-message-id="{$messageID}">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
             <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
             <div class="deleteStatusBtn">
             <button id="delete" onclick="updateReportStatus(this,'{$reportID}', 'found','{$messageID}');"><i class="ri-delete-bin-2-line" style="font-size:24px;color:red"></i></button>

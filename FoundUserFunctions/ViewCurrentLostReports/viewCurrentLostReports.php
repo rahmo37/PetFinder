@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <link rel="stylesheet" href="./viewCurrentLostReports.css">
   <title>Document</title>
 </head>
@@ -78,7 +79,7 @@
       $htmlContent = <<<HTML
         <div class="container">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
             <div class="name-container">
               <p id="petName">$petName</p>
             </div>

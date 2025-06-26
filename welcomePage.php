@@ -7,6 +7,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <title>Welcome Menu</title>
   <style>
     body,
@@ -167,7 +168,7 @@
       <p id="username">' . $username . ' (Lost Report Profile)</p>
       </div>
       <div class="menu-container">
-        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/FileALostreport/fileLostReport.html\'">
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/FileALostReport/fileLostReport.html\'">
         File A Lost Report
         </button>
 
@@ -204,7 +205,7 @@
         File A Found Report
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/viewReports/userFoundReports.php\'">
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/ViewReports/userFoundReports.php\'">
           View You Reports
         </button>
 

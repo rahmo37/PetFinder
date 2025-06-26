@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="./approveReports.css">
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <title>Document</title>
 </head>
 
@@ -98,7 +99,7 @@
       $htmlContent = <<<HTML
       <div class="container" data-report-id="{$reportID}">
         <div class="img-name-container">
-          <img src="../../Images/{$PhotoURL}" alt="" id="petImage" />
+          <img src="../../images/{$PhotoURL}" alt="" id="petImage" />
           <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
           <div class="name-container">
             <p id="petName">{$petName}</p>
@@ -203,7 +204,7 @@ HTML;
       $htmlContent = <<<HTML
         <div class="container" data-report-id="{$reportID}" data-message-id="{$messageID}">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
             <p class="message" style="opacity: 0" id="message-{$messageID}"></p>
             <div class="reportStatusBtn">
             <button id="accept" onclick="updateReportStatus(this,'{$reportID}', 'Accepted', 'found', '{$messageID}');">&#x2714;</button>

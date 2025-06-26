@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="/images/logo.png" type="image/png">
   <link rel="stylesheet" href="./userFoundReports.css">
   <title>Document</title>
 </head>
@@ -54,11 +55,11 @@
     f.Email AS email,
     fr.PhotoURL
     FROM 
-      UsersReportsLink ul
+      usersreportslink ul
     JOIN 
       finderreports fr ON ul.FinderReportID = fr.ReportID
     JOIN 
-      Finder f ON fr.FinderID = f.FinderID
+      finder f ON fr.FinderID = f.FinderID
     WHERE 
         ul.UserName = ?";
 
@@ -87,7 +88,7 @@
       $htmlContent = <<<HTML
         <div class="container">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
           </div>
           <div class="pet-info-container">
             <div class="info">

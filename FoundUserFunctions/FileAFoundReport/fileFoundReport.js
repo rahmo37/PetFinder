@@ -16,7 +16,7 @@ function validateForm() {
     let foundLocation = document.getElementById("foundLocation").value;
     let foundDate = document.getElementById("foundDate").value;
     let file = document.getElementById("file").files[0];
-    const acceptedImageType = ["tif", "gif", "jpg", "jpeg", "png"];
+    const acceptedImageType = ["tif", "gif", "jpg", "jpeg", "png", "JPG"];
     let imageType = null;
 
     // Finder Information Variables
