@@ -138,7 +138,7 @@
               <p id="username">' . $username . ' (Admin)</p>
             </div>
             <div class="menu-container">
-              <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/viewReports/selectReport.html\'">
+              <button class="menu-button" onclick="window.location.href=\'./AdminFunctions/ViewReports/selectReport.html\'">
                 View Reports
               </button>
       
@@ -167,7 +167,7 @@
       <p id="username">' . $username . ' (Lost Report Profile)</p>
       </div>
       <div class="menu-container">
-        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/FileALostreport/fileLostReport.html\'">
+        <button class="menu-button" onclick="window.location.href=\'./LostUserFunctions/FileALostReport/fileLostReport.html\'">
         File A Lost Report
         </button>
 
@@ -204,7 +204,7 @@
         File A Found Report
         </button>
 
-        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/viewReports/userFoundReports.php\'">
+        <button class="menu-button" onclick="window.location.href=\'./FoundUserFunctions/ViewReports/userFoundReports.php\'">
           View You Reports
         </button>
 

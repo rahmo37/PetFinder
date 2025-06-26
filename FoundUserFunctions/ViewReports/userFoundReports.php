@@ -87,7 +87,7 @@
       $htmlContent = <<<HTML
         <div class="container">
           <div class="img-name-container">
-            <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+            <img src="../../images/$PhotoURL" alt="" id="petImage" />
           </div>
           <div class="pet-info-container">
             <div class="info">

@@ -73,7 +73,7 @@
           $htmlContent = <<<HTML
             <div class="container">
               <div class="img-name-container">
-                <img src="../../Images/$PhotoURL" alt="" id="petImage" />
+                <img src="../../images/$PhotoURL" alt="" id="petImage" />
                 <div class="name-container">
                   <p id="petName">$petName</p>
                 </div>

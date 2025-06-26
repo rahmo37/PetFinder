@@ -1,0 +1,59 @@
+<!-- I certify that this submission is my own original work -->
+
+<!-- Creates the structure of the login page, has a form that contains, titles, username, password and confirm password fields and radio buttons -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>Document</title>
+  </head>
+
+  <!-- //! ===== Html Structure of the login page ===== -->
+  <body>
+    <div class="container">
+      <form class="form" id="loginForm">
+        <p class="title1">Welcome to PetFinder</p>
+        <p class="title2">Direct Login Page</p>
+        <button class="button admin" style="font-size: 13px">
+          Admin Login
+        </button>
+        <button class="button lost" style="font-size: 13px">
+          File A Lost Report
+        </button>
+        <button class="button found" style="font-size: 13px">
+          File A Found Report
+        </button>
+      </form>
+    </div>
+    <script type="module">
+      import { doExistUsernameAndPassword } from "./Helper/doExistUsernameAndPassword.js";
+      const adminBtn = document.querySelector(".admin");
+      const lostBtn = document.querySelector(".lost");
+      const foundBtn = document.querySelector(".found");
+      adminBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        doExistUsernameAndPassword("Obaedur123", "Obaedur123", "lost", () => {
+          window.open("../welcomePage.php", "_blank");
+        });
+      });
+      lostBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        doExistUsernameAndPassword("Alex123", "Alex123", "lost", () => {
+          window.open("../welcomePage.php", "_blank");
+        });
+      });
+      foundBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        doExistUsernameAndPassword("Alex123", "Alex123", "found", () => {
+          window.open("../welcomePage.php", "_blank");
+        });
+      });
+    </script>
+  </body>
+</html>

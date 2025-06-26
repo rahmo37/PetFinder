@@ -70,6 +70,8 @@ WHERE
 
     $result = $stmt->get_result();
 
+    echo $result->num_rows;
+
     for ($i = 0; $i < $result->num_rows; $i++) {
       $row = $result->fetch_assoc();
       $petName = htmlspecialchars($row['petName']);
